@@ -32,4 +32,47 @@
 --1.2
 
 --1
-max3 ::
+max3 :: Int -> Int -> Int -> Int
+max3 a b c = max a (max b c)
+
+--2
+min3 :: Int -> Int -> Int -> Int
+min3 a b c = min a (min b c)
+
+--3
+sort2 :: Int -> Int -> (Int, Int)
+sort2 a b = (min a b, max a b)
+
+--4
+bothTrue :: Bool -> Bool -> Bool
+bothTrue a b = if a == True then
+         if b == True then True
+         else False
+          else False
+
+--5
+solve2 :: Double -> Double -> (Bool, Double)
+solve2 a b = if a == 0 then (False, 0.0) else (True, (-b) / a)
+
+--6
+isParallel :: (Double, Double) -> (Double, Double) -> (Double, Double) -> (Double, Double) -> Bool
+isParallel a b c d = if ((snd b - snd a) / (fst b - fst a)) == ((snd d - snd c) / (fst d - fst c)) then True else False
+
+--7
+isIncluded :: (Int, Int) -> Int -> (Int, Int) -> Int -> Bool
+isIncluded c1 r1 c2 r2 = if (fst c1 - fst c2)^2 + (snd c1 - snd c2)^2 < (r1 -r2)^2 then True else False
+
+--8
+-- (5,5) (0,5) (5,0) - ok
+-- (5,6) (0,5) (5,0) - not ok
+isRectangular :: (Int, Int) -> (Int, Int) -> (Int, Int) -> Bool
+isRectangular a b c = if ((fst b - fst a) * (fst c - fst a) + (snd b - snd a) * (snd c - snd a)) == 0 || ((fst c - fst b) * (fst a - fst b) + (snd c - snd b) * (snd a - snd b)) == 0 || ((fst a - fst c) * (fst b - fst c) + (snd a - snd c) * (snd b - snd c)) == 0 then True else False
+
+--9
+-- сумма двух сторон всегда больше 3
+isTriangle :: Int -> Int -> Int -> Bool
+isTriangle a b c = if a + b > c && a + c > b && b + c > a then True else False
+
+--10
+isSorted :: Int -> Int -> Int -> Bool
+isSorted a b c = if(a >= b && b >= c) || (a <= b && b <= c) then True else False
