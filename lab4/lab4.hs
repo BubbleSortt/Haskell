@@ -16,18 +16,16 @@ root = Directory "root"
   ]
 
 
-
---dirAll :: FileSystem -> [String]
---dirAll (File name _) = [name]
---dirAll (Directory name contents) = concatMap (\x -> case x of
---                                                     File n _ -> [n]
---                                                      Directory _ _ -> dirAll x) contents
-
+-- dirAll, возвращающую список полных имен всех файлов каталога, включая подкаталоги.
+-- concatMap - удобен при работе со списками. Применяет функцию к каждому элементу списка и
+-- объединяет все в один список
 dirAll :: FileSystem -> [String]
 dirAll (File name _) = [name]
 dirAll (Directory _ contents) = concatMap dirAll contents
 
-
+-- find, возвращающая путь, ведущий к файлу с заданным именем. Например, если каталог содерит файлы a, b и c, и b
+-- является каталогом, содержащим x и y, тогда функция поиска
+-- для x должна вернуть строку "b/x"
 find :: String -> FileSystem -> Maybe String
 find target (File name _) | name == target = Just name
 find target (Directory name fs) =
@@ -38,9 +36,12 @@ find target (Directory name fs) =
        (s:_) -> Just (name ++ "/" ++ s)
 find _ _ = Nothing
 
---subdirResults - массив [Nothing, Nothing, Just "subdir/test"]
---subdirs получаем новый массив где лежит только тип Just
+-- subdirResults - массив [Nothing, Nothing, Just "subdir/test"]
+-- subdirs получаем новый массив где лежит только тип Just
 
+
+-- du, для заданного каталога возвращающая количество байт,
+-- занимаемых его файлами (включая файлы в подкаталогах).
 du :: FileSystem -> Int
 du (File _ size) = size
 du (Directory _ contents) = sum (map du contents)
